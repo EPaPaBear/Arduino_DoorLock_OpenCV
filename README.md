@@ -3,4 +3,36 @@
 This project attempts to simulate a door lock system in Proteus using facial recognition. The facial recognition component is handled in Python and uses serial communication
 to establish a connection with the Arduinon module in proteus using the **COMPIM** component.
 
-_I plan on finishing this later..._
+## Requirements
+
+You need to have the following installed before you should attempt to run anything in this repo. Else, you'll have a lot of errors.
+* Python 2 or 3
+* Virtual Serial Port Driver
+* Proteus 8 Application Framework
+* Arduino IDE
+* A reliable general purpose IDE, like sublime text
+
+Similarly, you need the following dependencies, assuming you've installed [npm](https://nodejs.org/en/download/) and [pip](https://pip.pypa.io/en/stable/installation/)
+* OpenCV : `pip install opencv-contrib-python`
+* imutils : `pip install imutils` 
+* CMake : `pip install cmake`
+* dlib : `pip install dlib`
+* face_recognition: `pip install face-recognition`
+* PySerial : `pip install pyserial`
+
+Once those dependencies are installed, you're good to go!
+
+## How to use
+
+The folder _`Images`_ constains a set of images(ordered in folders by corresponding name), insert your own set of dummy images to train the model with. (For example [LFW - People (Face Recognition)](https://www.kaggle.com/datasets/atulanandjha/lfwpeople?resource=download)).\
+Subsequently run the _`facial_detect_recognize.py`_ module to scan through all the images in the _`Images`_ folder and train the model with.\
+Once you've trained your model, a _`face_enc`_ file should be created.\
+Launch the Proteus Simulation Application and open the _`door_face_detect`_ Proteus Project file\
+Simultaneously launch the Arduino IDE and run the _`door_lock_face_detect.ino`_ file and export the compiled binary (hex) file\
+Return to the Proteus window and click on the Arduino UNO component and upload the path of the exported hex file\
+Ensure the Virstual Serial Port Driver is launched as well and create a pair between `COM1` and `COM3` virtual ports\
+Run the Proteus simulation\
+Now, run the _`facial_detection.py`_ module\
+Select an image you'd like to predict from the dialog box\
+If the face is recognized, the name of the person will be displayed on the LCD, and the motor will turn(door open)\
+Otherwise, the LCD will let you know that the input face has not been recognized and the door will not open\
